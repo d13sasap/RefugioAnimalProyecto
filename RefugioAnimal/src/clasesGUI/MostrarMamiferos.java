@@ -65,18 +65,6 @@ public class MostrarMamiferos extends JDialog {
 
 
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			MostrarMamiferos dialog = new MostrarMamiferos(opcion);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 
 

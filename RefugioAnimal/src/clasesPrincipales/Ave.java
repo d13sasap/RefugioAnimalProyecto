@@ -1,6 +1,7 @@
 package clasesPrincipales;
 
 import java.io.Serializable;
+import java.util.Calendar;
 /**
  * Clase abstracta Ave
  * @author Pablo Sánchez Sanvicente
@@ -28,9 +29,9 @@ public abstract class Ave extends Animal implements Serializable{
 	 * @throws DecimalNoValidoException excepción que salta si el decimal no es válido
 	 */
 	public Ave(String nombre, float peso, int edad, Sexos sexo,
-			int anioAlta, int mesAlta, int diaAlta, float cantidadComidaMensual,boolean vuela, boolean plumas)
+			Calendar fechaAlta, float cantidadComidaMensual,boolean vuela, boolean plumas)
 					throws NombreNoValidoException, EdadNoValidaException, DecimalNoValidoException {
-		super(nombre, peso, 2, edad, sexo, anioAlta, mesAlta, diaAlta,
+		super(nombre, peso, 2, edad, sexo, fechaAlta,
 				cantidadComidaMensual,factor);
 		this.tipoAnimal = FamiliaAnimales.AVE;
 		this.alimentacion = TiposAlimentacion.HERVIBORO;

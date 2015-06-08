@@ -51,18 +51,7 @@ public class MostrarSinAdoptar extends JDialog {
 	static int i;
 	static ArrayList<Animal> tmp = new ArrayList<Animal>();
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			MostrarSinAdoptar dialog = new MostrarSinAdoptar();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			//			e.printStackTrace();
-		}
-	}
+	
 
 
 

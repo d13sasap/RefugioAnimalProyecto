@@ -1,6 +1,7 @@
 package clasesPrincipales;
 
 import java.io.Serializable;
+import java.util.Calendar;
 /**
  * Clase Gato que hereda de mamífero
  * @author Pablo Sánchez Sanvicente
@@ -25,10 +26,10 @@ public class Gato extends Mamifero implements Serializable{
 	 * @throws DecimalNoValidoException excepci´n que salta en caso de que el decimal no sea valido
 	 */
 	public Gato(String nombre, float peso, int edad, Sexos sexo,
-			int anioAlta, int mesAlta, int diaAlta,
+			Calendar fechaAlta,
 			float cantidadComidaMensual, String raza,float costeAdopcion)
 					throws NombreNoValidoException, EdadNoValidaException, DecimalNoValidoException {
-		super(nombre, peso, edad, sexo, anioAlta, mesAlta, diaAlta,
+		super(nombre, peso, edad, sexo, fechaAlta,
 				cantidadComidaMensual, raza);
 		this.costeAdopcion = costeAdopcion;
 	}

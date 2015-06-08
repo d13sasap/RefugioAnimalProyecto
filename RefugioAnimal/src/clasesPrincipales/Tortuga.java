@@ -2,6 +2,7 @@ package clasesPrincipales;
 
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 /**
  * Clase Tortuga que hereda de reptil
@@ -26,9 +27,9 @@ public class Tortuga extends Reptil implements Serializable {
 	 * @throws DecimalNoValidoException
 	 */
 	public Tortuga(String nombre, float peso, int edad, Sexos sexo,
-			int anioAlta, int mesAlta, int diaAlta, float cantidadComidaMensual,float costeAdopcion)
+			Calendar fechaAlta, float cantidadComidaMensual,float costeAdopcion)
 					throws NombreNoValidoException, EdadNoValidaException, DecimalNoValidoException {
-		super(nombre, peso, 4, edad, sexo, anioAlta, mesAlta, diaAlta,
+		super(nombre, peso, 4, edad, sexo, fechaAlta,
 				cantidadComidaMensual,true, false);
 		this.costeAdopcion = costeAdopcion;
 	}

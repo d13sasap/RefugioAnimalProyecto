@@ -1,6 +1,7 @@
 package clasesPrincipales;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 /**
  * Clase serpiente que hereda de reptil
@@ -26,10 +27,10 @@ public class Serpiente extends Reptil implements Serializable {
 	 * @throws DecimalNoValidoException
 	 */
 	public Serpiente(String nombre, float peso, int edad,
-			Sexos sexo, int anioAlta, int mesAlta, int diaAlta,
+			Sexos sexo, Calendar fechaAlta,
 			float cantidadComidaMensual,float costeAdopcion,boolean venenoso) throws NombreNoValidoException,
 			EdadNoValidaException, DecimalNoValidoException {
-		super(nombre, peso, 0, edad, sexo, anioAlta, mesAlta, diaAlta,
+		super(nombre, peso, 0, edad, sexo, fechaAlta,
 				cantidadComidaMensual,false,venenoso);
 		this.costeAdopcion = costeAdopcion;
 	}

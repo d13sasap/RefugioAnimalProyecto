@@ -1,6 +1,7 @@
 package clasesGUI;
 
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -11,13 +12,17 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
+
 import clasesPrincipales.EdadNoValidaException;
 import clasesPrincipales.NombreNoValidoException;
 import clasesPrincipales.NombreYaExisteException;
 import clasesPrincipales.RefugioAnimal;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.KeyStroke;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.InputEvent;
 import java.io.File;
@@ -38,7 +43,7 @@ public class Principal extends JFrame{
 
 	Fichero fichero;
 	File file;
-	JFileChooser guardar;
+	JFileChooser filechooser;
 
 
 
@@ -52,7 +57,7 @@ public class Principal extends JFrame{
 					Principal frame = new Principal();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					System.exit(0);
 				}
 			}
 		});
@@ -64,10 +69,9 @@ public class Principal extends JFrame{
 	public Principal() throws NombreYaExisteException, NombreNoValidoException, EdadNoValidaException {
 
 		FileNameExtensionFilter filtro = new FileNameExtensionFilter("Refugio(*.ref)", "ref");
-		final JFileChooser abrir = new JFileChooser();
-		guardar = new JFileChooser();
-		guardar.setFileFilter(filtro);
-		abrir.setFileFilter(filtro);
+		filechooser = new JFileChooser();
+		filechooser.setFileFilter(filtro);
+		filechooser.setFileFilter(filtro);
 		setTituloSinGuardar();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -76,9 +80,12 @@ public class Principal extends JFrame{
 		setJMenuBar(menuBar);
 
 		JMenu mnArchivo = new JMenu("Archivo");
+		mnArchivo.setMnemonic('A');
 		menuBar.add(mnArchivo);
 
 		JMenuItem mntmNuevo = new JMenuItem("Nuevo");
+		mntmNuevo.setMnemonic('N');
+		mntmNuevo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.SHIFT_MASK));
 		mntmNuevo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//setTituloSinGuardar();
@@ -95,13 +102,13 @@ public class Principal extends JFrame{
 					else if(seleccion == 0){
 						if(refugio.isNuevo())
 						{
-							guardarComo(guardar);
+							guardarComo(filechooser);
 							nuevoRefugio();
 						}
 
 						else
 						{
-							guardarRefugio(guardar);
+							guardarRefugio(filechooser);
 							nuevoRefugio();
 						}
 					}
@@ -114,14 +121,15 @@ public class Principal extends JFrame{
 		mnArchivo.add(mntmNuevo);
 
 		JMenuItem mntmAbrir = new JMenuItem("Abrir");
+		mntmAbrir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.SHIFT_MASK));
 		mntmAbrir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int opcion = 0;
-				opcion = abrir.showOpenDialog(contentPane);
+				opcion = filechooser.showOpenDialog(contentPane);
 				if(opcion == JFileChooser.APPROVE_OPTION){
-					file = abrir.getSelectedFile();
+					file = filechooser.getSelectedFile();
 					try {
-						refugio = Fichero.leerFichero(abrir.getSelectedFile());
+						refugio = Fichero.leerFichero(filechooser.getSelectedFile());
 						setTitle("Refugio - "+file.getName());
 					} catch (FileNotFoundException e1) {
 						JOptionPane.showMessageDialog(contentPane,
@@ -145,10 +153,16 @@ public class Principal extends JFrame{
 		mnArchivo.add(separator_1);
 
 		JMenuItem mntmGuardar = new JMenuItem("Guardar");
+		mntmGuardar.setMnemonic('G');
+		mntmGuardar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, InputEvent.SHIFT_MASK));
 		mntmGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				guardarRefugio(guardar);
+				if(refugio.isNuevo())
+					guardarComo(filechooser);
+				else
+					guardarRefugio(filechooser);
 			}
+			
 
 
 		});
@@ -157,7 +171,7 @@ public class Principal extends JFrame{
 		JMenuItem mntmGuardarComo = new JMenuItem("Guardar Como");
 		mntmGuardarComo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				guardarComo(guardar);
+				guardarComo(filechooser);
 			}
 
 
@@ -183,13 +197,13 @@ public class Principal extends JFrame{
 					else if(seleccion == 0){
 						if(refugio.isNuevo())
 						{
-							guardarComo(guardar);
+							guardarComo(filechooser);
 							System.exit(0);
 						}
 
 						else
 						{
-							guardarRefugio(guardar);
+							guardarRefugio(filechooser);
 							System.exit(0);
 						}
 					}
@@ -199,6 +213,7 @@ public class Principal extends JFrame{
 		mnArchivo.add(mntmSalir);
 
 		JMenu mnRefugio = new JMenu("Refugio");
+		mnRefugio.setMnemonic('R');
 		menuBar.add(mnRefugio);
 
 		JMenu mnAltaAnimal = new JMenu("Alta Animal");
@@ -209,6 +224,7 @@ public class Principal extends JFrame{
 
 
 		JMenuItem mntmPerro = new JMenuItem("Perro");
+		mntmPerro.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, InputEvent.ALT_MASK));
 		mntmPerro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				AltaMamifero alta = new AltaMamifero(true);
@@ -219,6 +235,7 @@ public class Principal extends JFrame{
 		mnMamifero.add(mntmPerro);
 
 		JMenuItem mntmGato = new JMenuItem("Gato");
+		mntmGato.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, InputEvent.ALT_MASK));
 		mntmGato.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AltaMamifero alta = new AltaMamifero(false);
@@ -231,6 +248,7 @@ public class Principal extends JFrame{
 		mnAltaAnimal.add(mnAve);
 
 		JMenuItem mntmPaloma = new JMenuItem("Paloma");
+		mntmPaloma.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, InputEvent.ALT_MASK));
 		mntmPaloma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AltaNoMamifero alta = new AltaNoMamifero(0);
@@ -240,6 +258,7 @@ public class Principal extends JFrame{
 		mnAve.add(mntmPaloma);
 
 		JMenuItem mntmLoro = new JMenuItem("Loro");
+		mntmLoro.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_4, InputEvent.ALT_MASK));
 		mntmLoro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AltaNoMamifero alta = new AltaNoMamifero(1);
@@ -252,6 +271,7 @@ public class Principal extends JFrame{
 		mnAltaAnimal.add(mnReptil);
 
 		JMenuItem mntmTortuga = new JMenuItem("Tortuga");
+		mntmTortuga.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_5, InputEvent.ALT_MASK));
 		mntmTortuga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AltaNoMamifero alta = new AltaNoMamifero(2);
@@ -261,6 +281,7 @@ public class Principal extends JFrame{
 		mnReptil.add(mntmTortuga);
 
 		JMenuItem mntmSerpiente = new JMenuItem("Serpiente");
+		mntmSerpiente.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_6, InputEvent.ALT_MASK));
 		mntmSerpiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AltaNoMamifero alta = new AltaNoMamifero(3);
@@ -270,6 +291,7 @@ public class Principal extends JFrame{
 		mnReptil.add(mntmSerpiente);
 
 		JMenuItem mntmBajaAnimal = new JMenuItem("Baja Animal");
+		mntmBajaAnimal.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, InputEvent.CTRL_MASK));
 		mntmBajaAnimal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BajaAnimal baja = new BajaAnimal();
@@ -279,6 +301,7 @@ public class Principal extends JFrame{
 		mnRefugio.add(mntmBajaAnimal);
 
 		JMenuItem mntmAdoptarAnimal = new JMenuItem("Adoptar Animal");
+		mntmAdoptarAnimal.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
 		mntmAdoptarAnimal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AdoptarAnimal adop = new AdoptarAnimal();
@@ -288,10 +311,11 @@ public class Principal extends JFrame{
 		mnRefugio.add(mntmAdoptarAnimal);
 
 		JMenu mnMostrar = new JMenu("Mostrar");
+		mnMostrar.setMnemonic('M');
 		menuBar.add(mnMostrar);
 
 		JMenuItem mntmAnimal = new JMenuItem("Animal");
-		mntmAnimal.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.ALT_MASK));
+		mntmAnimal.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, InputEvent.ALT_MASK));
 		mntmAnimal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MostrarAnimal mostrar = new MostrarAnimal();
@@ -300,7 +324,8 @@ public class Principal extends JFrame{
 		});
 
 		JMenuItem mntmTamaoRefugio = new JMenuItem("Tama\u00F1o Refugio");
-		mntmTamaoRefugio.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_MASK));
+		mntmTamaoRefugio.setMnemonic('T');
+		mntmTamaoRefugio.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, InputEvent.ALT_MASK));
 		mntmTamaoRefugio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				getTamanioRefugio();
@@ -312,7 +337,7 @@ public class Principal extends JFrame{
 		mnMostrar.add(mntmTamaoRefugio);
 
 		JMenuItem mntmRefugioCompleto = new JMenuItem("Refugio Completo");
-		mntmRefugioCompleto.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.ALT_MASK));
+		mntmRefugioCompleto.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, InputEvent.ALT_MASK));
 		mntmRefugioCompleto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(refugio.refugio.size() !=0){
@@ -547,19 +572,17 @@ public class Principal extends JFrame{
 		menuBar.add(mnMs);
 
 		JMenuItem mntmAyuda = new JMenuItem("Ayuda");
+		mntmAyuda.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		mntmAyuda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				abrirAyuda();
 
 			}
-
-
-
-
-		});
+});
 		mnMs.add(mntmAyuda);
 
 		JMenuItem mntmSobre = new JMenuItem("Sobre");
+		mntmSobre.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
 		mntmSobre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Sobre sobre = new Sobre();
@@ -576,30 +599,35 @@ public class Principal extends JFrame{
 		JOptionPane.showMessageDialog(contentPane,
 				"El refugio tiene "+ refugio.getTamanioRefugio() +" animales registrados.");
 	}
+	/**
+	 * Método para guardar un archivo que no ha sido guardado previamente o para guardar indicando el nombre y lugar
+	 * @param guardar Jfilechooser a tratar en el metodo
+	 */
 	private void guardarComo(JFileChooser guardar) {
 		int opcion = 0;
 		opcion = guardar.showSaveDialog(contentPane);
 		if(opcion == JFileChooser.APPROVE_OPTION){
 			file = guardar.getSelectedFile();
 			fichero = new Fichero(file);
-
 			try {
 				refugio.setNuevo(false);
 				fichero.guardarFichero(file, refugio);
-
 				setTitle("Refugio - "+file.getName());
 			} catch (IOException e) {
 				JOptionPane.showMessageDialog(contentPane,
 						"ERROR! Fallo al guardar (IOException)", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			}
+			
 		}
 
 	}//guardarComo
+	/**
+	 * Método para guardar un refugio ya existente
+	 * @param guardar
+	 */
 	private void guardarRefugio(JFileChooser guardar) {
-		if(refugio.isNuevo())
-			guardarComo(guardar);
-		else{
+		
 			try {
 				Fichero.guardarFicheroExistente(file, refugio);
 			} catch (FileNotFoundException e) {
@@ -611,7 +639,7 @@ public class Principal extends JFrame{
 						"ERROR! Fallo al guardar (IOException)", "Error",
 						JOptionPane.ERROR_MESSAGE);
 			}
-		}
+		
 	}//guardarRefugio
 
 	/**
@@ -621,6 +649,10 @@ public class Principal extends JFrame{
 		setTitle("Refugio - Sin Guardar");
 	}
 	@SuppressWarnings("static-access")
+	/**
+	 * Método para comprobar si el refugio está modificado sin haber sido guardado
+	 * @return true si está modificado , false en caso contrario
+	 */
 	private boolean refugioModificado(){
 		if(!refugio.isNuevo()){
 			RefugioAnimal guardado = null;

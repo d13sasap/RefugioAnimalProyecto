@@ -2,6 +2,7 @@ package clasesPrincipales;
 
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 /**
  * Clase Perro que hereda de Mamífero
@@ -28,9 +29,9 @@ public class Perro extends Mamifero implements Serializable {
 	 * @throws DecimalNoValidoException
 	 */
 	public Perro(String nombre, float peso, int edad, Sexos sexo, 
-			int anioAlta, int mesAlta, int diaAlta, float cantidadComidaMensual,String raza,float costeAdopcion)
+			Calendar fechaAlta, float cantidadComidaMensual,String raza,float costeAdopcion)
 					throws NombreNoValidoException, EdadNoValidaException, DecimalNoValidoException {
-		super(nombre, peso, edad, sexo, anioAlta, mesAlta, diaAlta,cantidadComidaMensual,raza);
+		super(nombre, peso, edad, sexo, fechaAlta,cantidadComidaMensual,raza);
 		this.costeAdopcion = costeAdopcion;
 	}
 

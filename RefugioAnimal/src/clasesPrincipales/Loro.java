@@ -2,6 +2,7 @@ package clasesPrincipales;
 
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 
 /**
@@ -27,9 +28,9 @@ public class Loro extends Ave implements Serializable {
 	 * @throws DecimalNoValidoException
 	 */
 	public Loro(String nombre, float peso, int edad, Sexos sexo,
-			int anioAlta, int mesAlta, int diaAlta, float cantidadComidaMensual,float costeAdopcion)
+			Calendar fechaAlta, float cantidadComidaMensual,float costeAdopcion)
 					throws NombreNoValidoException, EdadNoValidaException, DecimalNoValidoException {
-		super(nombre, peso, edad, sexo, anioAlta, mesAlta, diaAlta,
+		super(nombre, peso, edad, sexo, fechaAlta,
 				cantidadComidaMensual,true,true);
 		this.costeAdopcion = costeAdopcion;
 	}

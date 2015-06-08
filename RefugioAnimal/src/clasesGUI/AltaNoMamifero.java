@@ -1,6 +1,7 @@
 package clasesGUI;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -12,8 +13,11 @@ import javax.swing.JTextField;
 import javax.swing.Icon;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
+
 import java.awt.Color;
+
 import javax.swing.JRadioButton;
+
 import clasesPrincipales.Animal;
 import clasesPrincipales.DecimalNoValidoException;
 import clasesPrincipales.EdadNoValidaException;
@@ -24,10 +28,12 @@ import clasesPrincipales.Paloma;
 import clasesPrincipales.Serpiente;
 import clasesPrincipales.Sexos;
 import clasesPrincipales.Tortuga;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+
 import javax.swing.JCheckBox;
 import javax.swing.ButtonGroup;
 
@@ -55,18 +61,7 @@ public class AltaNoMamifero extends JDialog {
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JLabel lblEnUso;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			AltaNoMamifero dialog = new AltaNoMamifero(idAnimal);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	
 
 	/**
 	 * Create the dialog.
@@ -372,7 +367,7 @@ public class AltaNoMamifero extends JDialog {
 					private void altaSerpiente() {
 						try {
 							venenosaCheckBox.setVisible(true);
-							creado = Principal.refugio.altaAnimal(new Serpiente(nombretextField.getText().trim(), Float.parseFloat(pesotextField_1.getText()), Integer.parseInt(edadtextField_2.getText()), sexoElegido(), Integer.parseInt(anioAltatextField_7.getText()), Integer.parseInt(mesAltatextField_6.getText()), Integer.parseInt(diaAltatextField_5.getText()), Float.parseFloat(comidaMensualtextField_4.getText()), Float.parseFloat(costeAdopcontextField_3.getText()), venenosaCheckBox.isSelected()));
+							creado = Principal.refugio.altaAnimal(new Serpiente(nombretextField.getText().trim(), Float.parseFloat(pesotextField_1.getText()), Integer.parseInt(edadtextField_2.getText()), sexoElegido(),Animal.comprobarFecha( Integer.parseInt(anioAltatextField_7.getText()), Integer.parseInt(mesAltatextField_6.getText()), Integer.parseInt(diaAltatextField_5.getText())), Float.parseFloat(comidaMensualtextField_4.getText()), Float.parseFloat(costeAdopcontextField_3.getText()), venenosaCheckBox.isSelected()));
 						}  catch (NumberFormatException e1) {
 							JOptionPane.showMessageDialog(contentPanel,
 									"Formato de fecha inválido", "Error",
@@ -393,12 +388,16 @@ public class AltaNoMamifero extends JDialog {
 							JOptionPane.showMessageDialog(contentPanel,
 									"Nombre ya existe", "Error",
 									JOptionPane.ERROR_MESSAGE);
+						}catch (IllegalArgumentException e1) {
+							JOptionPane.showMessageDialog(contentPanel,
+									"La fecha es incorrecta.", "Error",
+									JOptionPane.ERROR_MESSAGE);
 						}
 					}
 
 					private void altaTortuga() {
 						try {
-							creado = Principal.refugio.altaAnimal(new Tortuga(nombretextField.getText().trim(),  Float.parseFloat(pesotextField_1.getText()), Integer.parseInt(edadtextField_2.getText()), sexoElegido(), Integer.parseInt(anioAltatextField_7.getText()), Integer.parseInt(mesAltatextField_6.getText()), Integer.parseInt(diaAltatextField_5.getText()), Float.parseFloat(comidaMensualtextField_4.getText()), Float.parseFloat(costeAdopcontextField_3.getText())));
+							creado = Principal.refugio.altaAnimal(new Tortuga(nombretextField.getText().trim(),  Float.parseFloat(pesotextField_1.getText()), Integer.parseInt(edadtextField_2.getText()), sexoElegido(), Animal.comprobarFecha( Integer.parseInt(anioAltatextField_7.getText()), Integer.parseInt(mesAltatextField_6.getText()), Integer.parseInt(diaAltatextField_5.getText())), Float.parseFloat(comidaMensualtextField_4.getText()), Float.parseFloat(costeAdopcontextField_3.getText())));
 						} catch (NumberFormatException e1) {
 							JOptionPane.showMessageDialog(contentPanel,
 									"Formato de fecha inválido", "Error",
@@ -418,12 +417,16 @@ public class AltaNoMamifero extends JDialog {
 									"Nombre ya existe", "Error",
 									JOptionPane.ERROR_MESSAGE);
 
+						}catch (IllegalArgumentException e1) {
+							JOptionPane.showMessageDialog(contentPanel,
+									"La fecha es incorrecta.", "Error",
+									JOptionPane.ERROR_MESSAGE);
 						}
 					}
 
 					private void altaLoro() {
 						try {
-							creado = Principal.refugio.altaAnimal(new Loro(nombretextField.getText().trim(), Float.parseFloat(pesotextField_1.getText()), Integer.parseInt(edadtextField_2.getText()), sexoElegido(), Integer.parseInt(anioAltatextField_7.getText()), Integer.parseInt(mesAltatextField_6.getText()), Integer.parseInt(diaAltatextField_5.getText()), Float.parseFloat(comidaMensualtextField_4.getText()), Float.parseFloat(costeAdopcontextField_3.getText())));
+							creado = Principal.refugio.altaAnimal(new Loro(nombretextField.getText().trim(), Float.parseFloat(pesotextField_1.getText()), Integer.parseInt(edadtextField_2.getText()), sexoElegido(), Animal.comprobarFecha( Integer.parseInt(anioAltatextField_7.getText()), Integer.parseInt(mesAltatextField_6.getText()), Integer.parseInt(diaAltatextField_5.getText())), Float.parseFloat(comidaMensualtextField_4.getText()), Float.parseFloat(costeAdopcontextField_3.getText())));
 
 						} catch (NumberFormatException e1) {
 							JOptionPane.showMessageDialog(contentPanel,
@@ -444,17 +447,19 @@ public class AltaNoMamifero extends JDialog {
 							JOptionPane.showMessageDialog(contentPanel,
 									"Nombre ya existe", "Error",
 									JOptionPane.ERROR_MESSAGE);
+						}catch (IllegalArgumentException e1) {
+							JOptionPane.showMessageDialog(contentPanel,
+									"La fecha es incorrecta.", "Error",
+									JOptionPane.ERROR_MESSAGE);
 						}
 					}
 
 					private void altaPaloma() {
 						try {
 
-							creado = Principal.refugio.altaAnimal(new Paloma(nombretextField.getText().trim(), Float.parseFloat(pesotextField_1.getText()), Integer.parseInt(edadtextField_2.getText()), sexoElegido(), Integer.parseInt(anioAltatextField_7.getText()), Integer.parseInt(diaAltatextField_5.getText()),
-									Integer.parseInt(mesAltatextField_6.getText()), Float.parseFloat(comidaMensualtextField_4.getText()), Float.parseFloat(costeAdopcontextField_3.getText())));
-
-
-						}   catch (NumberFormatException e1) {
+							creado = Principal.refugio.altaAnimal(new Paloma(nombretextField.getText().trim(), Float.parseFloat(pesotextField_1.getText()), Integer.parseInt(edadtextField_2.getText()), sexoElegido(), Animal.comprobarFecha( Integer.parseInt(anioAltatextField_7.getText()), Integer.parseInt(mesAltatextField_6.getText()), Integer.parseInt(diaAltatextField_5.getText())), Float.parseFloat(comidaMensualtextField_4.getText()), Float.parseFloat(costeAdopcontextField_3.getText())));
+						}  
+						catch (NumberFormatException e1) {
 							JOptionPane.showMessageDialog(contentPanel,
 									"Formato de fecha inválido", "Error",
 									JOptionPane.ERROR_MESSAGE);
@@ -473,6 +478,10 @@ public class AltaNoMamifero extends JDialog {
 						} catch (NombreYaExisteException e1) {
 							JOptionPane.showMessageDialog(contentPanel,
 									"Nombre ya existe", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						}catch (IllegalArgumentException e1) {
+							JOptionPane.showMessageDialog(contentPanel,
+									"La fecha es incorrecta.", "Error",
 									JOptionPane.ERROR_MESSAGE);
 						}
 					}

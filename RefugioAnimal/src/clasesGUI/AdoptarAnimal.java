@@ -1,6 +1,7 @@
 package clasesGUI;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -8,8 +9,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
 import clasesPrincipales.Animal;
 import clasesPrincipales.FechaAdopcionAnteriorAlta;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
@@ -32,18 +35,7 @@ public class AdoptarAnimal extends JDialog {
 	private JTextField fechaAltaTextField_1;
 	JButton adoptarButton;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			AdoptarAnimal dialog = new AdoptarAnimal();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	
 
 	/**
 	 * Create the dialog.
@@ -72,13 +64,12 @@ public class AdoptarAnimal extends JDialog {
 		adoptarButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				boolean tmp;
-				//Calendar fecha = new GregorianCalendar(Integer.parseInt(aniotextField_3.getText()), Integer.parseInt(mestextField_2.getText()), Integer.parseInt(diatextField_1.getText()));
+				
 				try {
 					if(Principal.refugio.getAnimalNombre(nombretextField.getText())!=null){
-						tmp = Principal.refugio.getAnimalNombre(nombretextField.getText()).adoptarAnimal(Integer.parseInt(diatextField_1.getText()),
-								Integer.parseInt(mestextField_2.getText())-1, Integer.parseInt(aniotextField_3.getText()));
-						if(tmp){
+//						tmp = Principal.refugio.getAnimalNombre(nombretextField.getText()).adoptarAnimal(Animal.comprobarFecha(Integer.parseInt(aniotextField_3.getText()),Integer.parseInt(mestextField_2.getText())-1,Integer.parseInt(diatextField_1.getText())));
+						if(Principal.refugio.getAnimalNombre(nombretextField.getText()).adoptarAnimal(Animal.comprobarFecha(Integer.parseInt(aniotextField_3.getText()),Integer.parseInt(mestextField_2.getText())-1,Integer.parseInt(diatextField_1.getText())))
+						){
 							//ACTUALIZAMOS LISTAS CADA VEZ ADOPTAMOS
 							Principal.refugio.getListaAdoptados();
 							Principal.refugio.getListaNoAdoptados();
@@ -100,6 +91,10 @@ public class AdoptarAnimal extends JDialog {
 				catch (FechaAdopcionAnteriorAlta e1) {
 					JOptionPane.showMessageDialog(contentPanel,
 							"La adopción no puede ser previa al alta del animal.", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}catch (IllegalArgumentException e1) {
+					JOptionPane.showMessageDialog(contentPanel,
+							"La fecha es incorrecta.", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}
 
@@ -156,7 +151,7 @@ public class AdoptarAnimal extends JDialog {
 					adoptarButton.setEnabled(true);
 					tmp = Principal.refugio.getAnimalNombre(nombretextField.getText());
 					Calendar cal = tmp.getFechaAlta();
-					//cal.add(Calendar.MONTH);
+					
 
 					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 					sdf.setLenient(false);

@@ -2,6 +2,7 @@ package clasesPrincipales;
 
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 
 @SuppressWarnings("serial")
@@ -28,10 +29,10 @@ public abstract class Mamifero extends Animal implements Serializable{
 	 * @throws DecimalNoValidoException
 	 */
 	public Mamifero(String nombre, float peso, int edad,
-			Sexos sexo, int anioAlta, int mesAlta, int diaAlta,
+			Sexos sexo, Calendar fechaAlta,
 			float cantidadComidaMensual,String raza) throws NombreNoValidoException,
 			EdadNoValidaException, DecimalNoValidoException {
-		super(nombre, peso, 4, edad, sexo, anioAlta, mesAlta, diaAlta,cantidadComidaMensual,factor);
+		super(nombre, peso, 4, edad, sexo, fechaAlta,cantidadComidaMensual,factor);
 		this.tipoAnimal = FamiliaAnimales.MAMIFERO;
 		this.alimentacion = TiposAlimentacion.CARNIVORO;
 		this.reproduccion = TiposReproduccion.VIVIPARO;

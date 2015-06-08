@@ -48,18 +48,6 @@ public class MostrarAnimal extends JDialog {
 	private JTextField fechaAdopciontextField;
 	JPanel panelFechaAdopcion;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			MostrarAnimal dialog = new MostrarAnimal();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Create the dialog.
