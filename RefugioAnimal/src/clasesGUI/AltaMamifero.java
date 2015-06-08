@@ -1,6 +1,7 @@
 package clasesGUI;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -13,6 +14,7 @@ import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
+
 import clasesPrincipales.Animal;
 import clasesPrincipales.DecimalNoValidoException;
 import clasesPrincipales.EdadNoValidaException;
@@ -21,6 +23,7 @@ import clasesPrincipales.NombreNoValidoException;
 import clasesPrincipales.NombreYaExisteException;
 import clasesPrincipales.Perro;
 import clasesPrincipales.Sexos;
+
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -44,18 +47,7 @@ public class AltaMamifero extends JDialog {
 	private JTextField anioAltaTextField;
 	boolean creado = false;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			AltaMamifero dialog = new AltaMamifero(bool);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	
 
 	/**
 	 * Create the dialog.
@@ -63,10 +55,6 @@ public class AltaMamifero extends JDialog {
 	public AltaMamifero(final boolean bool) {
 		setResizable(false);
 		setModal(true);
-		//		//Probando
-		//		tmp = Principal.refugio;
-		//		//--------
-
 		establecerTitulo(bool);
 		setBounds(100, 100, 582, 408);
 		getContentPane().setLayout(new BorderLayout());
@@ -333,6 +321,7 @@ public class AltaMamifero extends JDialog {
 				JButton okButton = new JButton("Confirmar");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						
 						if(bool){//si true es un perro
 
 							altaPerro();
@@ -364,9 +353,10 @@ public class AltaMamifero extends JDialog {
 						//si no =  es un gato
 
 						try {
+							
+							
 							creado = Principal.refugio.altaAnimal(new Gato(nombreTextField.getText(), Float.parseFloat(pesoTextField.getText()), Integer.parseInt(edadTextField_2.getText())
-									, sexoElegido(), Integer.parseInt(anioAltaTextField.getText()), Integer.parseInt(mesAltaTextField.getText()),
-									Integer.parseInt(diaAltatextField_1.getText()), Float.parseFloat(comidaMensualtextField.getText()), 
+									, sexoElegido(), Animal.comprobarFecha(Integer.parseInt(anioAltaTextField.getText()), Integer.parseInt(mesAltaTextField.getText()), Integer.parseInt(diaAltatextField_1.getText())), Float.parseFloat(comidaMensualtextField.getText()), 
 									razaTextField.getText().trim(), Float.parseFloat(CosteAdopTextField.getText())));
 						} catch (EdadNoValidaException e1) {
 							JOptionPane.showMessageDialog(contentPanel,
@@ -392,13 +382,17 @@ public class AltaMamifero extends JDialog {
 									"Decimal No Válido. Debe ser positivo.", "Error",
 									JOptionPane.ERROR_MESSAGE);
 						}
+						catch (IllegalArgumentException e1) {
+							JOptionPane.showMessageDialog(contentPanel,
+									"La fecha es incorrecta.", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						}
 					}
 
 					private void altaPerro() {
 						try {
 							creado = Principal.refugio.altaAnimal(new Perro(nombreTextField.getText(), Float.parseFloat(pesoTextField.getText()), Integer.parseInt(edadTextField_2.getText())
-									, sexoElegido(), Integer.parseInt(anioAltaTextField.getText()), Integer.parseInt(mesAltaTextField.getText()),
-									Integer.parseInt(diaAltatextField_1.getText()), Float.parseFloat(comidaMensualtextField.getText()), 
+									, sexoElegido(), Animal.comprobarFecha(Integer.parseInt(anioAltaTextField.getText()), Integer.parseInt(mesAltaTextField.getText()), Integer.parseInt(diaAltatextField_1.getText())), Float.parseFloat(comidaMensualtextField.getText()), 
 									razaTextField.getText().trim(), Float.parseFloat(CosteAdopTextField.getText())));
 						}
 						catch (EdadNoValidaException e1) {
@@ -423,6 +417,11 @@ public class AltaMamifero extends JDialog {
 						catch (DecimalNoValidoException e1) {
 							JOptionPane.showMessageDialog(contentPanel,
 									"Decimal No Válido. Debe ser positivo.", "Error",
+									JOptionPane.ERROR_MESSAGE);
+						}
+						catch (IllegalArgumentException e1) {
+							JOptionPane.showMessageDialog(contentPanel,
+									"La fecha es incorrecta.", "Error",
 									JOptionPane.ERROR_MESSAGE);
 						}
 					}

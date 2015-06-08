@@ -1,6 +1,7 @@
 package clasesPrincipales;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
@@ -18,7 +19,8 @@ public abstract class Animal implements Alimentable, Serializable{
 	private int edad;//
 	protected Sexos sexo;//
 	protected Boolean adoptado;//
-	protected Calendar fechaAlta;
+	protected static Calendar fechaAlta;
+	
 	protected Calendar fechaAdopcion;
 	protected TiposReproduccion reproduccion;//
 	protected TiposAlimentacion alimentacion;//
@@ -26,7 +28,7 @@ public abstract class Animal implements Alimentable, Serializable{
 	protected float costeAdopcion;//
 
 	protected FamiliaAnimales tipoAnimal;
-	protected static Pattern patronNombre = Pattern.compile("^[A-Z||Ñ][a-z||ñ]{2,15}$");//Una sola palabra minimo 3 y máximo 10 letras
+	protected static Pattern patronNombre = Pattern.compile("^[A-ZÁÉÍÓÚÑ||Ñ][a-záéíóúñ||ñ]{2,15}$");//Una sola palabra minimo 3 y máximo 10 letras
 	protected float factor;
 
 
@@ -49,19 +51,17 @@ public abstract class Animal implements Alimentable, Serializable{
 	 * @throws EdadNoValidaException excepción que ocurre cuando la edad no es válida(negativa)
 	 * @throws DecimalNoValidoException excepción que ocurre cuando el decimal es negativo
 	 */
-	public Animal(String nombre, float peso,int nPatas, int edad, Sexos sexo, int anioAlta, 
-			int mesAlta, int diaAlta,float cantidadComidaMensual,float factor) throws NombreNoValidoException, EdadNoValidaException, DecimalNoValidoException {
+	public Animal(String nombre, float peso,int nPatas, int edad, Sexos sexo, Calendar fechaAlta,float cantidadComidaMensual,float factor) throws NombreNoValidoException, EdadNoValidaException, DecimalNoValidoException {
 		super();
-
+		setFechaAlta(fechaAlta);;
+		fechaAlta.setLenient(false);
 		setNombre(nombre);
 		setPeso(peso);
 		this.nPatas = nPatas;
 		setEdad(edad);
 		this.sexo = sexo;
 		this.adoptado = false;
-		//fechaAlta.setLenient(false);
-		//fechaAdopcion.setLenient(false);
-		this.fechaAlta = new GregorianCalendar(anioAlta,(mesAlta-1),diaAlta);
+		
 		setFactor(factor);
 		this.cantidadComidaMensual = cantidadComidaMensual;
 		this.costeMantenimientoMensual = calcularCosteAlimentacion();
@@ -138,6 +138,7 @@ public abstract class Animal implements Alimentable, Serializable{
 	 * Método para establecer la fecha de alta del animal.
 	 * @param fechaAlta objeto tipo calendar para manejar la fecha de alta
 	 */
+	@SuppressWarnings("static-access")
 	public void setFechaAlta(Calendar fechaAlta) {
 		this.fechaAlta = fechaAlta;
 	}
@@ -233,12 +234,12 @@ public abstract class Animal implements Alimentable, Serializable{
 	 * @return true si fue adoptado correctamente, false si no fue posible
 	 * @throws FechaAdopcionAnteriorAlta excepción que salta si se pretende registrar una fecha de adopción previa a la alta en el refugio
 	 */
-	public boolean adoptarAnimal(int diaAdopcion, int mesAdopcion, int anioAdopcion) throws FechaAdopcionAnteriorAlta{
+	public boolean adoptarAnimal(Calendar fechaAdoptado) throws FechaAdopcionAnteriorAlta{
 		if(!adoptado){
-			Calendar tmp = new GregorianCalendar(anioAdopcion,mesAdopcion,diaAdopcion);
-			if(esAdopcionPosteriorAlta(tmp)){
+			
+			if(esAdopcionPosteriorAlta(fechaAdoptado)){
 				setAdoptado(true);
-				setFechaAdopcion(tmp);
+				setFechaAdopcion(fechaAdoptado);
 				return true;
 			}
 			else throw new FechaAdopcionAnteriorAlta();
@@ -359,5 +360,23 @@ public abstract class Animal implements Alimentable, Serializable{
 	 */
 	public void setFactor(float factor) {
 		this.factor = factor;
+	}
+	/**
+	 * Método para comprobar si una fecha está correta con su lenient en false
+	 * @param anio entero para el año
+	 * @param mes entero para el mes
+	 * @param dia entero para el día
+	 * @return una fecha correcta en caso de no serlo salta una excepción a contrlar en el GUI
+	 */
+	public static Calendar comprobarFecha(int anio, int mes, int dia){
+		Calendar fecha;
+		fecha = new GregorianCalendar(anio,mes,dia);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		fecha.setLenient(false);
+		@SuppressWarnings("unused")//lo uso para que salte la excepción
+		String formatted = sdf.format(fecha.getTime());
+		return fecha;
+		
+	
 	}
 }

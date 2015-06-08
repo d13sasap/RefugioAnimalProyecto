@@ -55,18 +55,7 @@ public class MostrarAdoptados extends JDialog {
 	static ArrayList<Animal> tmp = new ArrayList<Animal>();
 	private static JTextField fechaAdopciontextField;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			MostrarAdoptados dialog = new MostrarAdoptados();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			
-		}
-	}
+	
 
 
 

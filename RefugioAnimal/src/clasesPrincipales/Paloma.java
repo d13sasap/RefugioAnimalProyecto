@@ -1,6 +1,7 @@
 package clasesPrincipales;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 /**
  * Clase Paloma que hereda de Ave
@@ -25,8 +26,8 @@ public class Paloma extends Ave implements Serializable {
 	 * @throws DecimalNoValidoException
 	 */
 	public Paloma(String nombre, float peso, int edad, Sexos sexo,
-			int anioAlta, int diaAlta, int mesAlta, float cantidadComidaMensual,float costeAdopcion) throws NombreNoValidoException, EdadNoValidaException, DecimalNoValidoException {
-		super(nombre, peso,  edad, sexo, anioAlta, mesAlta, diaAlta,
+			Calendar fechaAlta, float cantidadComidaMensual,float costeAdopcion) throws NombreNoValidoException, EdadNoValidaException, DecimalNoValidoException {
+		super(nombre, peso,  edad, sexo, fechaAlta,
 				cantidadComidaMensual,true, true);
 		this.costeAdopcion = costeAdopcion;
 	}
